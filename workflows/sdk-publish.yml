@@ -1,0 +1,37 @@
+name: SDK Publish
+
+on:
+  workflow_call:
+    inputs:
+      package-path:
+        type: string
+        default: '.'
+    secrets:
+      NPM_TOKEN:
+        required: true
+
+jobs:
+  publish:
+    name: npm publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+          cache: npm
+          cache-dependency-path: ${{ inputs.package-path }}/package-lock.json
+
+      - run: npm ci
+        working-directory: ${{ inputs.package-path }}
+
+      - run: npm run build
+        working-directory: ${{ inputs.package-path }}
+
+      - run: npm publish --access public
+        working-directory: ${{ inputs.package-path }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
