@@ -1,0 +1,46 @@
+name: Bug Report
+description: Something isn't working
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: repo
+    attributes:
+      label: Repository
+      options:
+        - sdk
+        - api
+        - oracle-service
+        - soroban-contracts
+        - zk-circuits
+        - dashboard
+        - docs
+        - core
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: "⚠️ **Never include API keys, private keys, or identity data in bug reports.** For security vulnerabilities, use [private advisory](https://github.com/humonicsprotocol/.github/security/advisories/new)."
